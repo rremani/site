@@ -340,3 +340,16 @@ img::-moz-selection {
 body {
     webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
 }
+.service .service-i{
+    margin: auto;
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.service .service-t{
+    color: rgba(79, 79, 79, 0.91);
+    font-weight: 300;
+}
+.service .service-d{
+    color: gray;
+}
