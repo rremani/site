@@ -41,3 +41,9 @@ def about(request):
 
 def signup(request):
     return render(request, 'signup_login.html')
+
+
+def demo(request):
+    return render(request, 'demo.html')
+
+
