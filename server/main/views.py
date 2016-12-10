@@ -31,7 +31,7 @@ def index(request):
 
 
 def about(request):
-    return HttpResponse("ABOUT")
+    return render(request, 'index_grey.html')
 
 
 def contact(request):
