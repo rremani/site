@@ -106,10 +106,10 @@
                     </div>
                     <form action="" method="post">
                         {% csrf_token %}
-                        {{ login_form.as_table }}
+                        {{ login_form.as_table }}<br>
+                        <button class="btn btn-info">LOGIN</button>
                     </form>
-                    <br>
-                    <button class="btn btn-info">LOGIN</button>
+
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-4"><hr></div>
                         <div class="col-lg-4 col-md-4 col-sm-4 text-center">
@@ -128,7 +128,11 @@
                 </div>
                 <div id="menu1" class="tab-pane fade">
                     <h3>SIGN up</h3>
-                    <p>Some content in menu 1.</p>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ signup_form.as_table }}<br>
+                        <button class="btn btn-info">SIGNUP</button>
+                    </form>
                 </div>
             </div>
         </div>

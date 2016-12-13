@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from main.forms import ImageUploadForm, LoginForm
+from main.forms import ImageUploadForm, LoginForm, SignUpForm
 from django.contrib import messages
 
 
@@ -41,16 +41,17 @@ def about(request):
 
 def login_signup(request):
     login_form = LoginForm(request.POST or None)
+    signup_form = SignUpForm(request.POST or None)
     if request.method == 'POST':
         if login_form.is_valid():
             print('valid login form')
-            return render(request, 'signup_login.html', {'login_form': login_form})
+            return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
         else:
             print('INVALID login form')
-            return render(request, 'signup_login.html', {'login_form': login_form})
+            return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
     else:
         print('handle get')
-        return render(request, 'signup_login.html', {'login_form': login_form})
+        return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
 
 
 
