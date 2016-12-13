@@ -39,7 +39,7 @@ def about(request):
     return render(request, 'index_grey.html')
 
 
-def signup(request):
+def login_signup(request):
     return render(request, 'signup_login.html')
 
 
