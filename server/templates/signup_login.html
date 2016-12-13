@@ -22,6 +22,7 @@
         padding-bottom: 50px;
         background-color: white;
         margin-top: 50px;
+        margin-bottom: 50px;
         height: auto;
         border-radius: 2px;
         box-shadow: 3px 2px 5px 3px #bfbfbf;
@@ -95,8 +96,35 @@
             </ul>
             <div class="tab-content">
                 <div id="home" class="tab-pane fade in active">
-                    <h3>LOGIN</h3>
-                    <p>Some content.</p>
+                    <h3 class="text-center">LOGIN</h3>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4"><hr></div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-center">
+                            username or email
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4"><hr></div>
+                    </div>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{ login_form.as_table }}
+                    </form>
+                    <br>
+                    <button class="btn btn-info">LOGIN</button>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4"><hr></div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-center">
+                            social websites
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4"><hr></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <a class="btn btn-default facebook" style="width: 100%"><span class="fa fa-facebook-official"></span> Facebook</a>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <a class="btn btn-default linkedin" style="width: 100%"><span class="fa fa-linkedin-square"></span> Facebook</a>
+                        </div>
+                    </div>
                 </div>
                 <div id="menu1" class="tab-pane fade">
                     <h3>SIGN up</h3>
