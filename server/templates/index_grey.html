@@ -110,10 +110,10 @@
                 </div>
             </div>
 
-{#            <div class="col-lg-8 col-lg-offset-2">#}
-{#                <h2>About Us</h2>#}
-{#                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sagittis et nunc ac posuere. Vivamus quis tellus non sem condimentum vestibulum. Curabitur nec nisl felis. Duis dapibus urna ut urna interdum, et bibendum felis faucibus. Sed tristique orci non gravida placerat. Integer aliquam augue ac consequat luctus. Pellentesque leo tortor, laoreet at justo a, euismod mattis dolor. Integer non elementum erat, a vulputate neque. Sed et dignissim quam, sed imperdiet sem.</p>#}
-{#            </div>#}
+            {#            <div class="col-lg-8 col-lg-offset-2">#}
+            {#                <h2>About Us</h2>#}
+            {#                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sagittis et nunc ac posuere. Vivamus quis tellus non sem condimentum vestibulum. Curabitur nec nisl felis. Duis dapibus urna ut urna interdum, et bibendum felis faucibus. Sed tristique orci non gravida placerat. Integer aliquam augue ac consequat luctus. Pellentesque leo tortor, laoreet at justo a, euismod mattis dolor. Integer non elementum erat, a vulputate neque. Sed et dignissim quam, sed imperdiet sem.</p>#}
+            {#            </div>#}
         </div>
     </div>
 
@@ -147,25 +147,38 @@
                 <img src="{% static 'assets/img/firedrop-setup-screen-01.png' %}" class="img-responsive">
             </div>
             <div class="col-lg-5">
-                <h2>Step 1: pick a image and submit it</h2>
+                <h2>Step 1: Upload images and submit it</h2>
                 <div class="seperator"></div>
-                <br><br><br>
-                <p>tiam non sodales enim. Aliquam varius dapibus mauris in iaculis. Cras ultrices placerat ornare.</p>
             </div>
         </div>
     </div>
 </section>
-<section id="demo-2" class="demo-section alternative-section-2 text-center">
+<section id="demo-1" class="demo-section alternative-section-2 text-center">
     <div class="container">
         <div class="row">
+            <div class="col-lg-5">
+                <h2>Step 2: Processing of Images</h2>
+                <div class="seperator"></div>
+                <br><br><br>
+                <p>Our trained model with Convolutional Neural Network will process the images to detect/ recognize the required objects</p>
+            </div>
+            <div class="col-lg-7">
+                <img src="{% static 'assets/img/firedrop-setup-screen-01.png' %}" class="img-responsive">
+            </div>
+        </div>
+    </div>
+</section>
+<section id="demo-2" class="demo-section alternative-section-1 text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <img src="{% static 'assets/img/firedrop-setup-screen-01.png' %}" class="img-responsive">
+            </div>
             <div class="col-lg-5">
                 <h2>Step 2: Voila !!</h2>
                 <div class="seperator"></div>
                 <br><br><br>
-                <p>tiam non sodales enim. Aliquam varius dapibus mauris in iaculis. Cras ultrices placerat ornare.</p>
-            </div>
-            <div class="col-lg-7">
-                <img src="{% static 'assets/img/firedrop-setup-screen-01.png' %}" class="img-responsive">
+                <p>You will get the output as output class, bounding box, and score</p>
             </div>
         </div>
     </div>
