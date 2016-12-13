@@ -21,8 +21,8 @@
         padding-top: 50px;
         padding-bottom: 50px;
         background-color: white;
-        margin-top: 50px;
-        margin-bottom: 50px;
+        margin-top: 25px;
+        margin-bottom: 25px;
         height: auto;
         border-radius: 2px;
         box-shadow: 3px 2px 5px 3px #bfbfbf;
@@ -84,18 +84,24 @@
         border-right: 1px solid #dddddd;
         padding: 20px;
     }
+    .logo{
+        max-height: 50px;
+        max-width: 50px;
+    }
 </style>
 <body>
 <div class="container">
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-10 col-lg-offset-3 col-md-offset-3 col-xs-offset-1 col-sm-offset-3 card">
-            <h1 class="text-center">Welcome !</h1>
+            <a href="{% url 'index' %}"><img src="{% static 'assets/hypo.png' %}" class="img-responsive logo" style="margin: auto"></a>
+            <br>
+            <h2 class="text-center">Welcome !</h2>
             <ul class="nav nav-tabs" role="tablist">
-                <li class="active"><a data-toggle="tab" href="#home">LOGIN</a></li>
-                <li><a data-toggle="tab" href="#menu1">SIGNUP</a></li>
+                <li class="active"><a data-toggle="tab" href="#login">LOGIN</a></li>
+                <li><a data-toggle="tab" href="#signup">SIGNUP</a></li>
             </ul>
             <div class="tab-content">
-                <div id="home" class="tab-pane fade in active">
+                <div id="login" class="tab-pane fade in active">
                     <h3 class="text-center">LOGIN</h3>
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-4"><hr></div>
@@ -126,7 +132,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="menu1" class="tab-pane fade">
+                <div id="signup" class="tab-pane fade">
                     <h3>SIGN up</h3>
                     <form action="" method="post">
                         {% csrf_token %}
