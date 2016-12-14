@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from main.forms import ImageUploadForm, LoginForm, SignUpForm
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
@@ -41,20 +41,37 @@ def about(request):
     return render(request, 'index_grey.html')
 
 
+def logout(request):
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+    auth.logout(request)
+    return HttpResponseRedirect('/')
+
+
 def login_signup(request):
     login_form = LoginForm(request.POST or None)
     signup_form = SignUpForm(request.POST or None)
     if "Login" in request.POST:
+        logout(request)
         print('Login form submitted')
         if login_form.is_valid():
             print('valid login form')
-            messages.add_message(request, messages.SUCCESS, "Login Successfull")
-            return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
+            email = login_form.cleaned_data['email']
+            password = login_form.cleaned_data['password']
+            try:
+                user = authenticate(username=email, password=password)
+                auth.login(request, user)
+                messages.add_message(request, messages.SUCCESS, "Login successful")
+                return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
+            except:
+                messages.add_message(request, messages.WARNING, "Username or password wrong")
+                return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
         else:
             print('INVALID login form')
             messages.add_message(request, messages.WARNING, "Login Failed")
             return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
     if "Signup" in request.POST:
+        logout(request)
         print('Signup form submitted')
         if signup_form.is_valid():
             email = signup_form.cleaned_data['email']
