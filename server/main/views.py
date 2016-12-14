@@ -38,10 +38,6 @@ def index(request):
     return render(request, 'index_grey.html')
 
 
-def about(request):
-    return render(request, 'index_grey.html')
-
-
 def logout(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/')
