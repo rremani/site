@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, get_backends
 
 
 def demo(request):
+    print(request.user)
     form = ImageUploadForm(request.POST, request.FILES or None)
     if request.method == 'POST':
         if form.is_valid():
@@ -62,7 +63,8 @@ def login_signup(request):
                 user = authenticate(username=email, password=password)
                 auth.login(request, user)
                 messages.add_message(request, messages.SUCCESS, "Login successful")
-                return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
+                return HttpResponseRedirect('/demo')
+                # return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
             except:
                 messages.add_message(request, messages.WARNING, "Username or password wrong")
                 return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
