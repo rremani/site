@@ -78,7 +78,7 @@ def login_signup(request):
                 return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
         else:
             print('INVALID signup form')
-            messages.add_message(request, messages.WARNING, "Signup Failed")
+            messages.add_message(request, messages.WARNING, "Enter a valid email address")
             return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
     else:
         print('handle get')
