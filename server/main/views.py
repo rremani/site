@@ -98,3 +98,7 @@ def demo(request):
             'title': 'Hypothizer Labs',
             'form': form
         })
+
+
+def result(request):
+    return render(request, 'result.html')
