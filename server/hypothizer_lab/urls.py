@@ -20,7 +20,7 @@ from main.views import index, login_signup, demo, logout
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', index, name='index'),
-    url(r'^signup$', login_signup, name='signup'),
     url(r'^demo$', demo, name='demo'),
+    url(r'^signup$', login_signup, name='signup'),
     url(r'^logout$', logout, name='logout'),
 ]
