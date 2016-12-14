@@ -96,6 +96,9 @@
             <a href="{% url 'index' %}"><img src="{% static 'assets/hypo.png' %}" class="img-responsive logo" style="margin: auto"></a>
             <br>
             <h2 class="text-center">Welcome !</h2>
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
             <ul class="nav nav-tabs" role="tablist">
                 <li class="active"><a data-toggle="tab" href="#login">LOGIN</a></li>
                 <li><a data-toggle="tab" href="#signup">SIGNUP</a></li>
@@ -113,7 +116,7 @@
                     <form action="" method="post">
                         {% csrf_token %}
                         {{ login_form.as_table }}<br>
-                        <button class="btn btn-info">LOGIN</button>
+                        <input type="submit" class="btn btn-info" name="Login"/>
                     </form>
 
                     <div class="row">
@@ -137,7 +140,7 @@
                     <form action="" method="post">
                         {% csrf_token %}
                         {{ signup_form.as_table }}<br>
-                        <button class="btn btn-info">SIGNUP</button>
+                        <input type="submit" class="btn btn-info" name="Signup"/>
                     </form>
                 </div>
             </div>
