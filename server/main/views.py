@@ -62,7 +62,8 @@ def login_signup(request):
                 auth.login(request, user)
                 print('valid signup form')
                 messages.add_message(request, messages.SUCCESS, "Signup Successfull")
-                return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
+                return HttpResponseRedirect('/demo')
+                # return render(request, 'signup_login.html', {'login_form': login_form, 'signup_form': signup_form})
         else:
             print('INVALID signup form')
             messages.add_message(request, messages.WARNING, "Enter a valid email address")
