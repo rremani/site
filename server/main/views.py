@@ -84,9 +84,16 @@ def demo(request):
         if single_image_form.is_valid():
             print('in single form')
             messages.add_message(request, messages.SUCCESS, "Form uploaded successfully")
-            files = request.FILES.getlist('images')
-            for file in files:
-                print file
+            file = single_image_form.cleaned_data['image']
+            print(file)
+            uploaded_img_folder = os.path.join(UPLOAD_TO, "anonymous")
+            if not os.path.exists(uploaded_img_folder):
+                os.makedirs(uploaded_img_folder)
+            if ".png" in file.name or ".jpg" in file.name:
+                for chunk in file.chunks():
+                    dest = open(os.path.join(uploaded_img_folder, file.name), "wb+")
+                    dest.write(chunk)
+                dest.close()
             return render(request, 'demo.html', {
                 'title': 'Hypothizer Labs',
                 'single_image_form': single_image_form,
