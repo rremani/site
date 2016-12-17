@@ -104,7 +104,7 @@ def demo(request):
             })
         else:
             messages.add_message(request, messages.WARNING, "Please select a file")
-            print "Handle invalid post"
+            print("Handle invalid post")
             return render(request, 'demo.html', {
                 'title': 'Hypothizer Labs',
                 'single_image_form': single_image_form,
@@ -115,19 +115,26 @@ def demo(request):
         subprocess.call("ls > new.txt", shell=True)
 
         if folder_form.is_valid():
-            messages.add_message(request, messages.SUCCESS, "Form uploaded successfully")
             files = request.FILES.getlist('image_folder')
             uploaded_img_folder = os.path.join(UPLOAD_TO, request.user.username)
             if not os.path.exists(uploaded_img_folder):
                 os.makedirs(uploaded_img_folder)
-
-            print files
+            print(files)
+            filter_flag = True
             for file in files:
-                for chunk in file.chunks():
-                    if ".png" in file.name:
+                if ".png" in file.name or ".jpg" in file.name:
+                    dest = None
+                    for chunk in file.chunks():
                         dest = open(os.path.join(uploaded_img_folder, file.name), "wb+")
                         dest.write(chunk)
-                dest.close()
+                    dest.close()
+                else:
+                    filter_flag = False
+            if filter_flag:
+                messages.add_message(request, messages.SUCCESS, "Please select a file")
+            else:
+                messages.add_message(request, messages.SUCCESS, "Folder uploaded successfully , but few files rejected"
+                                                                " due to mismatch extension")
             return render(request, 'demo.html', {
                 'title': 'Hypothizer Labs',
                 'single_image_form': single_image_form,
@@ -135,7 +142,7 @@ def demo(request):
             })
         else:
             messages.add_message(request, messages.WARNING, "Please select a file")
-            print "Handle invalid post"
+            print("Handle invalid post")
             return render(request, 'demo.html', {
                 'title': 'Hypothizer Labs',
                 'single_image_form': single_image_form,
