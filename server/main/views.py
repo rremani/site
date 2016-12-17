@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from main.forms import ImageUploadForm, LoginForm, SignUpForm
+from main.forms import ImageUploadForm, LoginForm, SignUpForm, FolderUploadForm
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, get_backends
@@ -74,32 +74,59 @@ def login_signup(request):
 
 
 def demo(request):
-    print(request.user)
-    form = ImageUploadForm(request.POST, request.FILES or None)
-    if request.method == 'POST':
-        if form.is_valid():
-            messages.add_message(request, messages.SUCCESS,"Form uploaded successfully")
+    single_image_form = ImageUploadForm(request.POST, request.FILES or None)
+    folder_form = FolderUploadForm(request.POST, request.FILES or None)
+    if "Upload_image" in request.POST:
+        if single_image_form.is_valid():
+            print('in single form')
+            messages.add_message(request, messages.SUCCESS, "Form uploaded successfully")
             files = request.FILES.getlist('images')
             for file in files:
                 print file
             return render(request, 'demo.html', {
                 'title': 'Hypothizer Labs',
-                'form': form
+                'single_image_form': single_image_form,
+                'folder_form': folder_form
             })
         else:
             messages.add_message(request, messages.WARNING, "Please select a file")
             print "Handle invalid post"
             return render(request, 'demo.html', {
                 'title': 'Hypothizer Labs',
-                'form': form
+                'single_image_form': single_image_form,
+                'folder_form': folder_form
+            })
+    elif "Upload_folder" in request.POST:
+        print('In folder form')
+        if folder_form.is_valid():
+            messages.add_message(request, messages.SUCCESS, "Form uploaded successfully")
+            files = request.FILES.getlist('folder')
+            for file in files:
+                print file
+            return render(request, 'demo.html', {
+                'title': 'Hypothizer Labs',
+                'single_image_form': single_image_form,
+                'folder_form': folder_form
+            })
+        else:
+            messages.add_message(request, messages.WARNING, "Please select a file")
+            print "Handle invalid post"
+            return render(request, 'demo.html', {
+                'title': 'Hypothizer Labs',
+                'single_image_form': single_image_form,
+                'folder_form': folder_form
             })
     else:
-        print "handle get"
+        print('Got in else')
         return render(request, 'demo.html', {
             'title': 'Hypothizer Labs',
-            'form': form
+            'single_image_form': single_image_form,
+            'folder_form': folder_form
         })
 
 
 def result(request):
     return render(request, 'result.html')
+
+
+

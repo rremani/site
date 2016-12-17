@@ -79,14 +79,15 @@
             <p class="text-center">Upload a folder of images and download result in CSV format</p>
             <form method="post" action="" enctype="multipart/form-data">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-default">Upload folder</button>
+                {{ folder_form.image_folder }}
+                <input type="submit" class="btn btn-default" name="Upload_folder"/>
             </form>
         {% else %}
             <p class="text-center">Upload an image to find the underlying Road Sign - U-Turn, Speed limit, lane and more</p>
             <form method="post" action="" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_table }}
-                <button type="submit" class="btn btn-default">CHOOSE IMAGE</button>
+                {{ single_image_form.image }}
+                <input type="submit" class="btn btn-default" name="Upload_image"/>
             </form>
         {% endif %}
         <br>
