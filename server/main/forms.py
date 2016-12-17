@@ -36,3 +36,6 @@ class SignUpForm(forms.Form):
 
 class ImageUploadForm(forms.Form):
     images = forms.FileField(required=True, widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    file_field = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True,
+                                                                         'webkitdirectory': True,
+                                                                         'directory': True}))
