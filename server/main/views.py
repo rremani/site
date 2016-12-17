@@ -5,8 +5,7 @@ from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, get_backends
 import os
-import sys
-import datetime
+from main.models import HypoUser
 from hypothizer_lab.settings import UPLOAD_TO
 import subprocess
 
@@ -62,6 +61,7 @@ def login_signup(request):
                 user.is_active = True
                 user.is_superuser = False
                 user.save()
+                HypoUser(user=user).save()
                 user = authenticate(username=email, password=password)
                 auth.login(request, user)
                 print('valid signup form')
@@ -80,12 +80,16 @@ def login_signup(request):
 def demo(request):
     single_image_form = ImageUploadForm(request.POST, request.FILES or None)
     folder_form = FolderUploadForm(request.POST, request.FILES or None)
+    if request.user.is_anonymous():
+        hypouser = HypoUser.objects.get(user__username='anonymous')
+    else:
+        hypouser = HypoUser.objects.get(user=request.user)
     if "Upload_image" in request.POST:
         if single_image_form.is_valid():
             print('in single form')
             file = single_image_form.cleaned_data['image']
             print(file)
-            uploaded_img_folder = os.path.join(UPLOAD_TO, "anonymous")
+            uploaded_img_folder = os.path.join(UPLOAD_TO, "anonymous/"+str(hypouser.counter))
             if not os.path.exists(uploaded_img_folder):
                 os.makedirs(uploaded_img_folder)
             if ".png" in file.name or ".jpg" in file.name:
@@ -95,6 +99,8 @@ def demo(request):
                     dest.write(chunk)
                 dest.close()
                 messages.add_message(request, messages.SUCCESS, "Image uploaded successfully")
+                hypouser.counter += 1
+                hypouser.save()
             else:
                 messages.add_message(request, messages.WARNING, "Please select an image with png or jpg format")
             return render(request, 'demo.html', {
@@ -112,11 +118,11 @@ def demo(request):
             })
     elif "Upload_folder" in request.POST:
         print('In folder form')
-        subprocess.call("ls > new.txt", shell=True)
+        subprocess.call('nvidia-docker run  -ti -v /home/hypothizer/Documents/py-faster-rcnn:/py-faster-rcnn -w /py-faster-rcnn rremani/cuda-py-caffe_v2 /bin/bash -c "./tools/demo_new.py --gpu 0 --net mmi --userid ' + str(hypouser.user.username) + ' --counter ' + str(hypouser.counter) + ' --out_file out_mmi1.txt"', shell=True)
 
         if folder_form.is_valid():
             files = request.FILES.getlist('image_folder')
-            uploaded_img_folder = os.path.join(UPLOAD_TO, request.user.username)
+            uploaded_img_folder = os.path.join(UPLOAD_TO, request.user.username+"/"+str(hypouser.counter))
             if not os.path.exists(uploaded_img_folder):
                 os.makedirs(uploaded_img_folder)
             print(files)
@@ -131,10 +137,12 @@ def demo(request):
                 else:
                     filter_flag = False
             if filter_flag:
-                messages.add_message(request, messages.SUCCESS, "Please select a file")
+                messages.add_message(request, messages.SUCCESS, "Folder uploaded succesfully")
             else:
                 messages.add_message(request, messages.SUCCESS, "Folder uploaded successfully , but few files rejected"
                                                                 " due to mismatch extension")
+            hypouser.counter += 1
+            hypouser.save()
             return render(request, 'demo.html', {
                 'title': 'Hypothizer Labs',
                 'single_image_form': single_image_form,

@@ -9,4 +9,4 @@ class HypoUser(models.Model):
     counter = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.username
+        return self.user.username
