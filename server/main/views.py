@@ -4,7 +4,11 @@ from main.forms import ImageUploadForm, LoginForm, SignUpForm, FolderUploadForm
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, get_backends
-
+import os
+import sys
+import datetime
+from hypothizer_lab.settings import UPLOAD_TO
+import subprocess
 
 def index(request):
     return render(request, 'index_grey.html')
@@ -98,11 +102,22 @@ def demo(request):
             })
     elif "Upload_folder" in request.POST:
         print('In folder form')
+        subprocess.call("ls > new.txt", shell=True)
+
         if folder_form.is_valid():
             messages.add_message(request, messages.SUCCESS, "Form uploaded successfully")
-            files = request.FILES.getlist('folder')
+            files = request.FILES.getlist('image_folder')
+            uploaded_img_folder = os.path.join(UPLOAD_TO, request.user.username)
+            if not os.path.exists(uploaded_img_folder):
+                os.makedirs(uploaded_img_folder)
+
+            print files
             for file in files:
-                print file
+                for chunk in file.chunks():
+                    if ".png" in file.name:
+                        dest = open(os.path.join(uploaded_img_folder, file.name), "wb+")
+                        dest.write(chunk)
+                dest.close()
             return render(request, 'demo.html', {
                 'title': 'Hypothizer Labs',
                 'single_image_form': single_image_form,
