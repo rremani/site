@@ -3,7 +3,7 @@ from main.models import HypoUser
 
 
 class AdminHypoUser(admin.ModelAdmin):
-    list_display = ['email']
+    list_display = ['user', 'counter']
 
     class Meta:
         model = HypoUser

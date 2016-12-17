@@ -159,6 +159,3 @@ def demo(request):
 
 def result(request):
     return render(request, 'result.html')
-
-
-
