@@ -118,7 +118,6 @@ def demo(request):
             })
     elif "Upload_folder" in request.POST:
         print('In folder form')
-        subprocess.call('nvidia-docker run  -ti -v /home/hypothizer/Documents/py-faster-rcnn:/py-faster-rcnn -w /py-faster-rcnn rremani/cuda-py-caffe_v2 /bin/bash -c "./tools/demo_new.py --gpu 0 --net mmi --userid ' + str(hypouser.user.username) + ' --counter ' + str(hypouser.counter) + ' --out_file out_mmi1.txt"', shell=True)
 
         if folder_form.is_valid():
             files = request.FILES.getlist('image_folder')
@@ -141,6 +140,8 @@ def demo(request):
             else:
                 messages.add_message(request, messages.SUCCESS, "Folder uploaded successfully , but few files rejected"
                                                                 " due to mismatch extension")
+            
+            subprocess.call('nvidia-docker run  -ti -v /home/hypothizer/Documents/py-faster-rcnn:/py-faster-rcnn -w /py-faster-rcnn rremani/cuda-py-caffe_v2 /bin/bash -c "./tools/demo_new.py --gpu 0 --net mmi --userid ' + str(hypouser.user.username) + ' --counter ' + str(hypouser.counter) + ' --out_file out_mmi1.txt"', shell=True)
             hypouser.counter += 1
             hypouser.save()
             return render(request, 'demo.html', {
